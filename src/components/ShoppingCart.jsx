@@ -12,7 +12,7 @@ export const ShoppingCart = () => {
     (acc, curr) => acc + curr.quantity * curr.price,
     0
   );
-
+  
   return (
     <div className="cart-container">
       <div>

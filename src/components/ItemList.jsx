@@ -39,10 +39,12 @@ export const ItemList = () => {
       cleanedData[i].image = imagenes[i]
     }
 
+    
+
   return (
     <div className="items-list">
       {cleanedData.map((product, idx) => {
-        return <Item key={product.id} {...product} />;
+        return <Item key={product.id} {...product}/>;
       })}
     </div>
   );

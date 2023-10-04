@@ -53,6 +53,17 @@ export const Item = ({ name, Cost, id, image,Instock }) => {
 
   const quantityPerItem = getQuantityById(id);
 
+  const fetchProduct = async () => {
+    try {
+        const response = await fetch(`http://localhost:1337/api/products/${id}`);
+        const product = await response.json();
+        console.log(product.data);
+        setStock(stock + product.data.attributes.Instock)
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+  }
+
   return (
     <div className="item-box">
       {quantityPerItem > 0 && (
@@ -79,6 +90,7 @@ export const Item = ({ name, Cost, id, image,Instock }) => {
           subtract item
         </button>
       )}
+      <button onClick={fetchProduct} style={{marginTop: '10px', borderRadius: '8px'}}>Recargar Stock</button>
     </div>
   );
 };
