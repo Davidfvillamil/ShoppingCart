@@ -1,15 +1,18 @@
 import React, { useContext } from "react";
 import { CartContext } from "../contexts/ShoppingCartContext";
+import { useState } from "react";
 
-export const Item = ({ name, Cost, id, image }) => {
+export const Item = ({ name, Cost, id, image,Instock }) => {
   const [cart, setCart] = useContext(CartContext);
+  const [stock,setStock] = useState(Instock)
+  const [statusStock, setStatusStock] = useState(true)
 
   const addToCart = () => {
     setCart((currItems) => {
       const isItemsFound = currItems.find((item) => item.id === id);
       if (isItemsFound) {
         return currItems.map((item) => {
-          if (item.id === id) {
+          if (item.id === id && stock > 0) {
             return { ...item, quantity: item.quantity + 1 };
           } else {
             return item;
@@ -19,6 +22,12 @@ export const Item = ({ name, Cost, id, image }) => {
         return [...currItems, { id, quantity: 1, Cost }];
       }
     });
+    if(stock <= 0){
+      setStatusStock(false)
+    }else{
+        setStock(stock - 1)
+        setStatusStock(true)
+    }
   };
 
   const removeItem = (id) => {
@@ -35,6 +44,7 @@ export const Item = ({ name, Cost, id, image }) => {
         });
       }
     });
+    setStock(stock + 1)
   };
 
   const getQuantityById = (id) => {
@@ -52,13 +62,14 @@ export const Item = ({ name, Cost, id, image }) => {
       <div>{name}</div>
       <img src={image} width="80" height="55" />
       <div className="item-price">${Cost}</div>
+      <div>In stock: {stock}</div>
 
       {quantityPerItem === 0 ? (
-        <button className="item-add-button" onClick={() => addToCart()}>
+        <button className="item-add-button" onClick={() => addToCart()} disabled = {!statusStock}>
           + Add to cart
         </button>
       ) : (
-        <button className="item-plus-button" onClick={() => addToCart()}>
+        <button className="item-plus-button" onClick={() => addToCart()} disabled = {!statusStock}>
           + add more
         </button>
       )}
