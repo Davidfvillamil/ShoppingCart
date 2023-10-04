@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { CartContext } from "../contexts/ShoppingCartContext";
 
-export const Item = ({ name, price, id, imgUrl }) => {
+export const Item = ({ name, Cost, id, image }) => {
   const [cart, setCart] = useContext(CartContext);
 
   const addToCart = () => {
@@ -16,7 +16,7 @@ export const Item = ({ name, price, id, imgUrl }) => {
           }
         });
       } else {
-        return [...currItems, { id, quantity: 1, price }];
+        return [...currItems, { id, quantity: 1, Cost }];
       }
     });
   };
@@ -50,8 +50,8 @@ export const Item = ({ name, price, id, imgUrl }) => {
       )}
 
       <div>{name}</div>
-      <img src={imgUrl} width="80" height="55" />
-      <div className="item-price">${price}</div>
+      <img src={image} width="80" height="55" />
+      <div className="item-price">${Cost}</div>
 
       {quantityPerItem === 0 ? (
         <button className="item-add-button" onClick={() => addToCart()}>
