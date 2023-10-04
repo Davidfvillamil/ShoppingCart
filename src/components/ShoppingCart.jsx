@@ -9,9 +9,9 @@ export const ShoppingCart = () => {
   }, 0);
 
   const totalPrice = cart.reduce(
-    (acc, curr) => acc + curr.quantity * curr.price,
-    0
-  );
+    (acc, curr) => {
+      return acc + curr.quantity * curr.Cost
+    },0);
   
   return (
     <div className="cart-container">
